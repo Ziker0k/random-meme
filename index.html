@@ -33,20 +33,20 @@
     async function loadRandomMeme() {
       const container = document.getElementById('meme-container');
       try {
-        const res = await fetch('https://memesapi.vercel.app/api/memes');
-        const data = await res.json();
-        if (data.url) {
-          container.innerHTML = `<img src="${data.url}" alt="Random Meme" />`;
-        } else {
-          container.innerHTML = '<p>Не удалось загрузить мем 😢</p>';
-        }
+        const response = await fetch('data/memes.json');
+        const memes = await response.json();
+        const randomIndex = Math.floor(Math.random() * memes.length);
+        const meme = memes[randomIndex];
+        container.innerHTML = `
+          <h2>${meme.title}</h2>
+          <img src="${meme.url}" alt="${meme.title}" />
+        `;
       } catch (error) {
         console.error(error);
         container.innerHTML = '<p>Ошибка при загрузке мема 😢</p>';
       }
     }
 
-    // Загружаем мем при загрузке страницы
     window.onload = loadRandomMeme;
   </script>
 </body>
