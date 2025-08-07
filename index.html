@@ -33,7 +33,7 @@
     async function loadRandomMeme() {
       const container = document.getElementById('meme-container');
       try {
-        const response = await fetch('resources/memes.json');
+        const response = await fetch('https://ziker0k.github.io/random-meme/resources/memes.json');
         const memes = await response.json();
         const randomIndex = Math.floor(Math.random() * memes.length);
         const meme = memes[randomIndex];
