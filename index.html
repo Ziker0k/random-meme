@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Случайный Мем</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    img {
+      max-width: 90%;
+      height: auto;
+      margin-top: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+  <h1>🎲 Случайный Мем</h1>
+  <div id="meme-container">
+    <p>Загружаем мем...</p>
+  </div>
+
+  <script>
+    async function loadRandomMeme() {
+      const container = document.getElementById('meme-container');
+      try {
+        const res = await fetch('https://api.imgflip.com/get_memes');
+        const data = await res.json();
+        if (data.success) {
+          const memes = data.data.memes;
+          const randomIndex = Math.floor(Math.random() * memes.length);
+          const meme = memes[randomIndex];
+          container.innerHTML = `
+            <h2>${meme.name}</h2>
+            <img src="${meme.url}" alt="${meme.name}" />
+          `;
+        } else {
+          container.innerHTML = '<p>Не удалось загрузить мем 😢</p>';
+        }
+      } catch (error) {
+        container.innerHTML = '<p>Ошибка при загрузке мема 😢</p>';
+        console.error(error);
+      }
+    }
+
+    // Загружаем мем при открытии страницы
+    window.onload = loadRandomMeme;
+  </script>
+</body>
+</html>
